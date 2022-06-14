@@ -53,14 +53,14 @@ class _SignUpState extends State<SignUp> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    height: 200,
+                    height: 150,
                     width: MediaQuery.of(context).size.width * 0.8,
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.09),
                     child: Image.asset("assets/images/login.png"),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 10,
                   ),
                   CustomFormField(
                     headingText: "Nombre de Usuario",
@@ -73,7 +73,7 @@ class _SignUpState extends State<SignUp> {
                     controller: _userName,
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 10,
                   ),
                   CustomFormField(
                     headingText: "Correo",
@@ -86,7 +86,20 @@ class _SignUpState extends State<SignUp> {
                     controller: _emailController,
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 10,
+                  ),
+                  CustomFormField(
+                    headingText: "Matricula",
+                    hintText: "Matricula",
+                    obsecureText: false,
+                    suffixIcon: const SizedBox(),
+                    maxLines: 1,
+                    textInputAction: TextInputAction.done,
+                    textInputType: TextInputType.text,
+                    controller: _userName,
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   CustomFormField(
                     maxLines: 1,
@@ -100,10 +113,7 @@ class _SignUpState extends State<SignUp> {
                         icon: const Icon(Icons.visibility), onPressed: () {}),
                   ),
                   const SizedBox(
-                    height: 16,
-                  ),
-                  const SizedBox(
-                    height: 16,
+                    height: 10,
                   ),
                   AuthButton(
                     onTap: () {},
