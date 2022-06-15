@@ -7,16 +7,16 @@ import 'package:studentbutton/styles/app_colors.dart';
 // import 'dart:convert';
 // import 'package:geocoder/geocoder.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+class MyProfile extends StatefulWidget {
+  const MyProfile({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
 enum MyDialogueAction { yes, no, maybe }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyProfileState extends State<MyProfile> {
   void _showAlert(String value) {
     showDialog(
         context: context,
