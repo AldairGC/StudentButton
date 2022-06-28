@@ -109,7 +109,9 @@ class _SigninState extends State<Signin> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MyHomePage()));
+                              builder: (context) => const MyHomePage(
+                                    title: 'MyHomePage',
+                                  )));
                     },
                     text: 'Iniciar Sesion',
                   ),

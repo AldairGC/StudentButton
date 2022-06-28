@@ -2,14 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:studentbutton/styles/app_colors.dart';
+// ignore: import_of_legacy_library_into_null_safe
 // import 'package:location/location.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
+// ignore: unused_import
+import 'package:http/http.dart' as http;
+// ignore: unused_import
+import 'dart:convert';
+// ignore: import_of_legacy_library_into_null_safe
 // import 'package:geocoder/geocoder.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  final String title;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -17,6 +21,62 @@ class MyHomePage extends StatefulWidget {
 enum MyDialogueAction { yes, no, maybe }
 
 class _MyHomePageState extends State<MyHomePage> {
+  _database() async {
+    // LocationData currentLocation;
+
+    // var location = Location();
+    try {
+      // currentLocation = await location.getLocation();
+
+      // double lat = currentLocation.latitude;
+      // double lng = currentLocation.longitude;
+      /*final response = await http.post(
+          "http://192.168.1.107/sahyog/views/sahyogflutter/helper/demo/geocode.php",
+          body: {
+            "lat": lat.toString(),
+            "lng": lng.toString(),
+            "action": "geo_loc",
+          });
+      Map<String, dynamic> _data = jsonDecode(response.body);*/
+      // final coordinates = Coordinates(lat, lng);
+      // var addresses =
+      // await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      // var first = addresses.first;
+      // ignore: avoid_print
+      // print("${first.featureName} : ${first.addressLine}");
+      // _neverSatisfied(first);
+    } catch (e) {
+      // ignore: avoid_print
+      print("error");
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  /*Future<void> _neverSatisfied(var first) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Your Location'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[Text("${first.addressLine}")],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: const Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }*/
   void _showAlert(String value) {
     showDialog(
         context: context,
@@ -124,7 +184,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             padding: const EdgeInsets.all(80.0),
                             onPressed: () {
                               _showAlert("Nombre de usuario estas en peligro?");
-                              // _database();
+                              _database();
                               /*Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
