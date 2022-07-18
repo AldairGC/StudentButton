@@ -30,6 +30,7 @@ dependencies:
   get: ^4.6.5
   # location: ^2.3.5
   http: ^0.13.4
+  firebase_core:
   # geocoder: ^0.2.1
   # geolocator: ^9.0.0
   # google_maps_flutter:  ^0.5.11+1
