@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:appstudentbutton6/screens/contacs.dart';
 import 'package:appstudentbutton6/screens/home.dart';
 import 'package:appstudentbutton6/widgets/custom_button_profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,44 +22,30 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  _updateData(email, tuition, name) async {
+  _updateData(password, email, tuition, name) async {
     var collection = FirebaseFirestore.instance.collection('Users');
+    var bytes = utf8.encode(password);
     collection
         .doc(globals.documentId)
         .update({
           'Correo': email,
           'Matricula': tuition,
           'Nombre': name,
+          'Contraseña': name,
         })
         .then((_) => print('Success'))
         .catchError((error) => print('Failed: $error'));
   }
 
-  _updateDataContacts(contactos) async {
-    var collection = FirebaseFirestore.instance.collection('Users');
-    collection
-        .doc(globals.documentId)
-        .update({"Contactos": contactos})
-        .then((_) => print('Success'))
-        .catchError((error) => print('Failed: $error'));
-  }
-
-  void _showAlertNoEmail() {
-    showDialog(context: context, builder: (_) => AlertDialog());
-  }
-
-  Map<String, dynamic> contactos = {
-    '1': "",
-    '2': "",
-    '3': "",
-  };
   final _userName = TextEditingController(text: globals.userName);
   final _emailController = TextEditingController(text: globals.userEmail);
   final _tuitionController = TextEditingController(text: globals.userMatricula);
+  final _passwordController = TextEditingController(text: "12345");
 
   String get userName => _userName.text.trim();
   String get email => _emailController.text.trim();
   String get tuition => _tuitionController.text.trim();
+  String get password => _passwordController.text.trim();
 
   @override
   Widget build(BuildContext context) {
@@ -157,8 +146,8 @@ class _ProfileState extends State<Profile> {
                       height: MediaQuery.of(context).size.height * 0.08,
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: TextFormField(
-                        initialValue: "1234567890",
-                        obscureText: true,
+                        controller: _passwordController,
+                        obscureText: false,
                         decoration: const InputDecoration(
                           icon: Icon(Icons.password),
                           labelStyle: TextStyle(
@@ -173,7 +162,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     AuthButtonProfile(
                       onTap: () {
-                        _updateData(email, tuition, userName);
+                        _updateData(password, email, tuition, userName);
                       },
                       text: 'Actualizar',
                     ),
@@ -182,7 +171,10 @@ class _ProfileState extends State<Profile> {
                     ),
                     AuthButtonProfile(
                       onTap: () {
-                        _showAlertNoEmail();
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Contacs()));
                       },
                       text: 'Contactos de Emergencia(proximamente)',
                     ),
