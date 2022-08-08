@@ -143,7 +143,7 @@ class _SignUpState extends State<SignUp> {
             bottom: 0.0,
             child: SingleChildScrollView(
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.89,
+                height: MediaQuery.of(context).size.height * 0.9,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
                     color: AppColors.whiteshade,
@@ -207,7 +207,7 @@ class _SignUpState extends State<SignUp> {
                       controller: _passwordController,
                       headingText: "Contraseña",
                       hintText: "Al menos 8 caracteres",
-                      obsecureText: true,
+                      obsecureText: _passwordVisible,
                       suffixIcon: IconButton(
                           icon: const Icon(Icons.visibility),
                           onPressed: () {
@@ -239,9 +239,8 @@ class _SignUpState extends State<SignUp> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const MyHomePage(
-                                            title: 'MyHomePage',
-                                          )));
+                                      builder: (context) =>
+                                          const MyHomePage()));
                             }
                           } else {
                             _showAlertNoEmail("¡Corre ya Registrado!");

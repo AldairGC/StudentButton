@@ -28,11 +28,7 @@ class _SigninState extends State<Signin> {
   void isLooged() {
     if (globals.isLoggedIn) {
       Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-              builder: (context) => const MyHomePage(
-                    title: 'MyHomePage',
-                  )));
+          context, MaterialPageRoute(builder: (context) => const MyHomePage()));
     }
   }
 
@@ -120,12 +116,8 @@ class _SigninState extends State<Signin> {
         });
         if (globals.isLoggedIn == true) {
           // ignore: use_build_context_synchronously
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const MyHomePage(
-                        title: 'MyHomePage',
-                      )));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const MyHomePage()));
         } else if (globals.isLoggedIn == false &&
             globals.isLoggedEmailIn == false) {
           _showAlertNoEmail("No existe niguna cuenta asosiada a este correo");
@@ -153,7 +145,7 @@ class _SigninState extends State<Signin> {
             },
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.08,
+            top: MediaQuery.of(context).size.width * 0.15,
             child: Container(
               height: MediaQuery.of(context).size.height * 0.9,
               width: MediaQuery.of(context).size.width,

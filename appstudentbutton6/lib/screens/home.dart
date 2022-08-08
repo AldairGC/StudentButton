@@ -1,13 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:appstudentbutton6/screens/profile.dart';
 import 'package:appstudentbutton6/screens/signup.dart';
 import 'package:appstudentbutton6/widgets/custom_header_home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:appstudentbutton6/styles/app_colors.dart';
 import 'package:appstudentbutton6/GlobalsVariables/globals.dart' as globals;
+import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
@@ -19,6 +23,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     isLooged();
+    _getInfoUser();
   }
 
   void isLooged() {
@@ -26,6 +31,32 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => const SignUp()));
     }
+  }
+
+  _getInfoUser() async {
+    var data = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(globals.documentId)
+        .get()
+        .then((value) {
+      return value.data();
+    });
+    if (data!.isNotEmpty) {
+      globals.userEmail = data["Correo"].toString();
+      globals.userMatricula = data["Matricula"].toString();
+      globals.userName = data["Nombre"].toString();
+    }
+  }
+
+  _getUserLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    String messageAlert =
+        "Hola, estoy en esta Ubicacion http://www.google.com/maps/place/${position.latitude},${position.longitude}, me siento en peligro!!";
+    String messageLink = "https://wa.me/2227727939?text=$messageAlert";
+    final Uri _url = Uri.parse(messageLink);
+
+    launchUrl(_url, mode: LaunchMode.externalApplication);
   }
 
   void _showAlert(String value) {
@@ -44,7 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               actions: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await _getUserLocation();
                     Navigator.of(context).pop();
                   },
                   child: const Text(
@@ -91,12 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
           CustomHeaderHome(
               text: nameCustom(globals.userName),
               onTap: () {
-                globals.isLoggedIn = false;
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const MyProfile()));
+                    MaterialPageRoute(builder: (context) => const Profile()));
               }),
-          Padding(
-            padding: const EdgeInsets.only(top: 85.0),
+          Positioned(
+            top: MediaQuery.of(context).size.width * 0.22,
+            left: 0.0,
+            right: 0.0,
+            bottom: 0.0,
             child: Container(
               decoration: const BoxDecoration(
                   color: AppColors.whiteshade,
@@ -108,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   Container(
                     alignment: Alignment.center,
-                    height: 250,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     child: Image.asset("assets/images/login.png"),
                   ),
                   Row(
@@ -121,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           Icons.all_inclusive,
                           color: Colors.blueAccent,
                         ),
-                        iconSize: 250,
+                        iconSize: MediaQuery.of(context).size.height * 0.3,
                         splashColor: Colors.redAccent,
                         onPressed: () {
                           var name = globals.userName;
